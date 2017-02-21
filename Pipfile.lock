@@ -1,0 +1,70 @@
+{
+    "default": {
+        "IPTCInfo": "==1.9.5.post6",
+        "lazy-object-proxy": "==1.2.2",
+        "PyYAML": "==3.12",
+        "six": "==1.10.0",
+        "pylint": "==1.6.5",
+        "packaging": "==16.8",
+        "backports.functools-lru-cache": "==1.3",
+        "watchdog": "==0.8.3",
+        "pyparsing": "==2.1.10",
+        "appdirs": "==1.4.0",
+        "requests-toolbelt": "==0.7.1",
+        "astroid": "==1.4.9",
+        "oauthlib": "==2.0.1",
+        "wrapt": "==1.10.8",
+        "pathtools": "==0.1.2",
+        "mccabe": "==0.6.1",
+        "requests-oauthlib": "==0.8.0",
+        "flickrsmartsync": {
+            "ref": "0b6200489882e99eba3049d73941efae0517bbc2",
+            "git": "https://github.com/faisalraja/flickrsmartsync",
+            "editable": true
+        },
+        "flickrapi": "==2.2.1",
+        "isort": "==4.2.5",
+        "requests": "==2.13.0",
+        "configparser": "==3.5.0",
+        "argh": "==0.26.2"
+    },
+    "develop": {
+        "IPTCInfo": "==1.9.5.post6",
+        "lazy-object-proxy": "==1.2.2",
+        "PyYAML": "==3.12",
+        "pathtools": "==0.1.2",
+        "pylint": "==1.6.5",
+        "packaging": "==16.8",
+        "backports.functools-lru-cache": "==1.3",
+        "watchdog": "==0.8.3",
+        "pyparsing": "==2.1.10",
+        "appdirs": "==1.4.0",
+        "requests-toolbelt": "==0.7.1",
+        "astroid": "==1.4.9",
+        "oauthlib": "==2.0.1",
+        "wrapt": "==1.10.8",
+        "six": "==1.10.0",
+        "mccabe": "==0.6.1",
+        "isort": "==4.2.5",
+        "flickrsmartsync": {
+            "ref": "0b6200489882e99eba3049d73941efae0517bbc2",
+            "git": "https://github.com/faisalraja/flickrsmartsync",
+            "editable": true
+        },
+        "flickrapi": "==2.2.1",
+        "requests-oauthlib": "==0.8.0",
+        "requests": "==2.13.0",
+        "configparser": "==3.5.0",
+        "argh": "==0.26.2"
+    },
+    "_meta": {
+        "sources": [
+            {
+                "url": "https://pypi.org/",
+                "verify_ssl": true
+            }
+        ],
+        "requires": {},
+        "Pipfile-sha256": "7c811ce37f01f6c20b41b596565de077cb325e7144802279abcd5cbfc4d9ec1e"
+    }
+}
