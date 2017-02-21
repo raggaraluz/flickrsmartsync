@@ -10,7 +10,7 @@ from remote import Remote
 
 __author__ = 'faisal'
 # todo get from setup.cfg
-version = '0.2.02'
+version = '0.3.0'
 
 logging.basicConfig()
 logger = logging.getLogger("flickrsmartsync")

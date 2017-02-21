@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import sys
 import os
 
-VERSION = '0.2.02'
+VERSION = '0.3.0'
 
 
 def main():
