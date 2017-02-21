@@ -191,7 +191,7 @@ class Remote(object):
         utc_time = datetime.datetime.utcfromtimestamp(file_mtime)
 
         try:
-            tags = exifread.process_file(open(file_path, 'rb'))
+            tags = exifread.process_file(open(file_path, 'rb'), details=False)
             exiftime = None or \
                 tags.get('Image DateTimeOriginal') or \
                 tags.get('Image DateTime') or \
