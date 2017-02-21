@@ -44,6 +44,10 @@ Both run from source and command line have same parameters::
 Change log
 ==========
 
+0.3.0 (2017-02-21)
+ * Python 3 compatibility
+ * Use flickrapi v2 for PyPI
+
 0.2.02 (2017-02-11)
  * added --fix-missing-description option (thanks jruusu)
  * added --dry-run option (thanks jruusu)
