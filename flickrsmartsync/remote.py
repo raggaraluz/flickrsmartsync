@@ -123,7 +123,7 @@ class Remote(object):
                         original = [s for s in sizes['sizes']['size'] if s['label'].startswith('Video Original') and s['media'] == 'video']
                         if original:
                             photos[title] = original.pop()['source']
-                            
+
                     else:
                         photos[title] = photo['url_o'] if get_url else photo['id']
 
@@ -211,7 +211,7 @@ class Remote(object):
     def download(self, url, path):
         folder = os.path.dirname(path)
         if not os.path.isdir(folder):
-            os.makedirs(folder)   
+            os.makedirs(folder)
         for i in range(RETRIES):
             try:
                 return urllib.request.urlretrieve(url, path)

@@ -100,7 +100,7 @@ class Sync(object):
                     else:
                         logger.info('Uploading [%s] to set [%s]' % (photo, display_title))
                         self.remote.upload(file_path, photo, remote_photo_set)
-      
+
         else:
             logger.warning("Unsupported sync option: %s" % self.cmd_args.sync_from)
 
@@ -179,7 +179,7 @@ class Sync(object):
                         continue
 
                     logger.info('Uploading [%s] to set [%s]' % (photo, display_title))
-                    file_path = os.path.join(photo_set, photo)                        
+                    file_path = os.path.join(photo_set, photo)
                     photo_id = self.remote.upload(file_path, photo, folder)
                     if photo_id:
                         photos[photo] = photo_id

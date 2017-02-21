@@ -30,7 +30,7 @@ Both run from source and command line have same parameters::
 
     start downloading all photos on flickr to that folder
     $ flickrsmartsync --download .
-    
+
     start downloading all paths starting with that path
     $ flickrsmartsync --download 2008/2008-01-01
 
