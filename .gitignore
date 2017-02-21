@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/python,osx
+# Created by https://www.gitignore.io/api/python,osx,tags
 
 ### OSX ###
 *.DS_Store
@@ -122,4 +122,23 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# End of https://www.gitignore.io/api/python,osx
+### Tags ###
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+
+# End of https://www.gitignore.io/api/python,osx,tags

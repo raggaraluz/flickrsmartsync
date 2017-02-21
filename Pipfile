@@ -4,6 +4,7 @@ verify_ssl = true
 
 [packages]
 packaging = "*"
+exifread = "*"
 future = "*"
 flickrapi = "*"
 watchdog = "*"

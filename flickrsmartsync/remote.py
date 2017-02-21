@@ -9,6 +9,8 @@ import re
 import urllib.request, urllib.parse, urllib.error
 import flickrapi
 import logging
+import datetime
+import exifread
 
 logger = logging.getLogger("flickrsmartsync")
 
@@ -176,9 +178,39 @@ class Remote(object):
                             'title': title,
                             'description': desc
                         })
-                        logger.info('Updating custom title [%s]...' % title)
+                        logger.info('Updating custom title [%s]...', title)
                         json.loads(self.api.photosets_editMeta(**update_args))
                         logger.info('done')
+
+    def set_photo_date(self, file_path, photo_id):
+        '''Set photo date_taken and date_posted to file mtime
+
+        See: https://www.flickr.com/services/api/flickr.photos.setDates.html
+        '''
+        file_mtime = os.path.getmtime(file_path)
+        utc_time = datetime.datetime.utcfromtimestamp(file_mtime)
+
+        try:
+            tags = exifread.process_file(open(file_path, 'rb'))
+            exiftime = None or \
+                tags.get('Image DateTimeOriginal') or \
+                tags.get('Image DateTime') or \
+                tags.get('Image DateTimeDigized')
+
+            if exiftime:
+                utc_time = datetime.datetime(*map(int, re.split('[: ]', exiftime.printable)))
+
+        except Exception as e:
+            print (e)
+
+        date_iso = utc_time.isoformat(' ')
+
+        self.api.photos.setDates(
+            photo_id=photo_id,
+            date_posted=date_iso,
+            date_taken=date_iso,
+            # date_taken_granularity=??
+        )
 
     def upload(self, file_path, photo, folder):
         upload_args = {
@@ -198,14 +230,16 @@ class Remote(object):
             'hidden': 2
         }
 
-        for i in range(RETRIES):
+        for _ in range(RETRIES):
             try:
                 upload = self.api.upload(file_path, None, **upload_args)
                 photo_id = upload.find('photoid').text
+                self.set_photo_date(file_path, photo_id)
                 self.add_to_photo_set(photo_id, folder)
                 return photo_id
             except Exception as e:
                 logger.warning("Retrying upload of %s/%s after error: %s" % (folder, photo, e))
+
         logger.error("Failed upload of %s/%s after %d retries" % (folder, photo, RETRIES))
 
     def download(self, url, path):
