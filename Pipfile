@@ -4,7 +4,7 @@ verify_ssl = true
 
 [packages]
 packaging = "*"
-watchdog = "*"
-IPTCInfo = "*"
-appdirs = "*"
+future = "*"
 flickrapi = "*"
+watchdog = "*"
+appdirs = "*"

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from builtins import object
 import unittest
 import logging
 import sys
@@ -14,7 +15,7 @@ logger.setLevel(logging.WARNING)
 class localTest(unittest.TestCase):
 
     def setUp(self):
-        class args:
+        class args(object):
             sync_path=here+os.sep
             starts_with=None
             keyword=None
@@ -46,4 +47,4 @@ class localTest(unittest.TestCase):
 
 if __name__ == '__main__':
     logging.debug('Started test case')
-    unittest.main(verbosity=2)        
+    unittest.main(verbosity=2)

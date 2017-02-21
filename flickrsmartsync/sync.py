@@ -1,3 +1,5 @@
+from builtins import input
+from builtins import object
 import os
 import logging
 
@@ -12,7 +14,7 @@ IMAGE_MAX_SIZE = 200 * 1024 * 1024      # 200MB
 class Sync(object):
 
     def __init__(self, cmd_args, local, remote):
-        global EXT_IMAGE, EXT_VIDEO, VIDEO_MAX_SIZE, IMAGE_MAX_SIZE
+        global EXT_IMAGE, EXT_VIDEO
         self.cmd_args = cmd_args
         # Create local and remote objects
         self.local = local
@@ -20,8 +22,8 @@ class Sync(object):
         # Ignore extensions
         if self.cmd_args.ignore_ext:
             extensions = self.cmd_args.ignore_ext.split(',')
-            EXT_IMAGE = filter(lambda e: e not in extensions, EXT_IMAGE)
-            EXT_VIDEO = filter(lambda e: e not in extensions, EXT_VIDEO)
+            EXT_IMAGE = [e for e in EXT_IMAGE if e not in extensions]
+            EXT_VIDEO = [e for e in EXT_VIDEO if e not in extensions]
 
     def start_sync(self):
         # Do the appropriate one time sync
@@ -38,15 +40,22 @@ class Sync(object):
 
     def sync(self):
         if self.cmd_args.sync_from == "all":
-            local_photo_sets = self.local.build_photo_sets(self.cmd_args.sync_path, EXT_IMAGE + EXT_VIDEO)
+            local_photo_sets = self.local.build_photo_sets(
+                self.cmd_args.sync_path,
+                EXT_IMAGE + EXT_VIDEO
+            )
             remote_photo_sets = self.remote.get_photo_sets()
             # First download complete remote sets that are not local
             for remote_photo_set in remote_photo_sets:
-                local_photo_set = os.path.join(self.cmd_args.sync_path, remote_photo_set).replace("/", os.sep)
+                local_photo_set = os.path.join(
+                    self.cmd_args.sync_path, remote_photo_set
+                ).replace("/", os.sep)
+
                 if local_photo_set not in local_photo_sets:
                     # TODO: will generate info messages if photo_set is a prefix to other set names
                     self.cmd_args.download = local_photo_set
                     self.download()
+
             # Now walk our local sets
             for local_photo_set in sorted(local_photo_sets):
                 remote_photo_set = local_photo_set.replace(self.cmd_args.sync_path, '').replace("/", os.sep)
@@ -57,6 +66,7 @@ class Sync(object):
                     # filter by what exists remotely, this is a dict of filename->id
                     remote_photos = self.remote.get_photos_in_set(remote_photo_set, get_url=True)
                 local_photos = [photo for photo, file_stat in sorted(local_photo_sets[local_photo_set])]
+
                 # download what doesn't exist locally
                 for photo in [photo for photo in remote_photos if photo not in local_photos]:
                     if self.cmd_args.dry_run:
@@ -134,7 +144,7 @@ class Sync(object):
                 for photo_set in photo_sets:
                     logger.info('Set Title: [%s]  Path: [%s]' % (self.remote.get_custom_set_title(photo_set), photo_set))
 
-                if self.cmd_args.custom_set_debug and raw_input('Is this your expected custom set titles (y/n):') != 'y':
+                if self.cmd_args.custom_set_debug and input('Is this your expected custom set titles (y/n):') != 'y':
                     exit(0)
 
         # Loop through all local photo set map and

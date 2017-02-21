@@ -1,4 +1,4 @@
-from iptcinfo import IPTCInfo
+from builtins import object
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import time

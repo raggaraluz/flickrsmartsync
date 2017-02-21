@@ -1,8 +1,12 @@
-import HTMLParser
+from future import standard_library
+standard_library.install_aliases()
+from builtins import range
+from builtins import object
+import html.parser
 import json
 import os
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import flickrapi
 import logging
 
@@ -80,7 +84,7 @@ class Remote(object):
     # Get photos in a set
     def get_photos_in_set(self, folder, get_url=False):
         # bug on non utf8 machines dups
-        folder = folder.encode('utf-8') if isinstance(folder, unicode) else folder
+        folder = folder.encode('utf-8') if isinstance(folder, str) else folder
 
         photos = {}
         # Always upload unix style
@@ -116,7 +120,7 @@ class Remote(object):
                         if sizes['stat'] != 'ok':
                             continue
 
-                        original = filter(lambda s: s['label'].startswith('Video Original') and s['media'] == 'video', sizes['sizes']['size'])
+                        original = [s for s in sizes['sizes']['size'] if s['label'].startswith('Video Original') and s['media'] == 'video']
                         if original:
                             photos[title] = original.pop()['source']
                             
@@ -130,7 +134,7 @@ class Remote(object):
 
     def update_photo_sets_map(self):
         # Get your photosets online and map it to your local
-        html_parser = HTMLParser.HTMLParser()
+        html_parser = html.parser.HTMLParser()
         photosets_args = self.args.copy()
         page = 1
         self.photo_sets_map = {}
@@ -146,11 +150,11 @@ class Remote(object):
             for current_set in sets['photosets']['photoset']:
                 # Make sure it's the one from backup format
                 desc = html_parser.unescape(current_set['description']['_content'])
-                desc = desc.encode('utf-8') if isinstance(desc, unicode) else desc
+                desc = desc.encode('utf-8') if isinstance(desc, str) else desc
 
                 if self.cmd_args.fix_missing_description and not desc:
                     current_set_title = html_parser.unescape(current_set['title']['_content'])
-                    current_set_title = current_set_title.encode('utf-8') if isinstance(current_set_title, unicode) else current_set_title
+                    current_set_title = current_set_title.encode('utf-8') if isinstance(current_set_title, str) else current_set_title
                     description_update_args = self.args.copy()
                     description_update_args.update({
                         'photoset_id': current_set['id'],
@@ -210,7 +214,7 @@ class Remote(object):
             os.makedirs(folder)   
         for i in range(RETRIES):
             try:
-                return urllib.urlretrieve(url, path)
+                return urllib.request.urlretrieve(url, path)
             except Exception as e:
                 logger.warning("Retrying download of %s after error: %s" % (path, e))
         # failed many times

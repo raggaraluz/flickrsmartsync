@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from builtins import object
 import unittest
 import logging
 import sys
@@ -14,13 +15,12 @@ logger.setLevel(logging.WARNING)
 class authedRemote(Remote):
     def auth_api(self):
         token = "72157645636119732-71cd968268ffd2e5"
-        self.api = flickrapi.FlickrAPI(KEY, SECRET, username="rqpmbdqm24", token=token)
-        return token
+        self.api = flickrapi.FlickrAPI(KEY, SECRET, username="rqpmbdqm24")
 
 class remoteTest(unittest.TestCase):
 
     def setUp(self):
-        class args:
+        class args(object):
             username=None
             sync_path=here+os.sep
             custom_set=None
@@ -79,7 +79,7 @@ class remoteTest(unittest.TestCase):
         images = self.remote.get_photos_in_set('Gradient test images', get_url=True)
         self.assertEquals(len(images), 1)
         self.deleteFile = here+os.sep+"tmp.jpg"
-        self.remote.download(images.values()[0], self.deleteFile)
+        self.remote.download(list(images.values())[0], self.deleteFile)
         self.assertEquals(os.path.isfile(self.deleteFile), 1)
 
 if __name__ == '__main__':
