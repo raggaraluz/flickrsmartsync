@@ -47,6 +47,7 @@ Change log
 0.3.0 (2017-02-21)
  * Python 3 compatibility
  * Use flickrapi v2 for PyPI
+ * added explicit timestamp synchronization for uploaded photos and videos
 
 0.2.02 (2017-02-11)
  * added --fix-missing-description option (thanks jruusu)
