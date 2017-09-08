@@ -13,10 +13,6 @@ Simply run the following::
 
     $ python setup.py install
 
-or `PyPi`_::
-
-    $ pip install flickrsmartsync
-
 
 Example Usage
 ==============
@@ -44,10 +40,5 @@ Both run from source and command line have same parameters::
 Links
 =====
 * `github.com`_ - source code
-* `altlimit.com`_ - website
-* `blog post`_ - blog post
 
-.. _github.com: https://github.com/faisalraja/flickrsmartsync
-.. _PyPi: https://pypi.python.org/pypi/flickrsmartsync
-.. _altlimit.com: http://www.altlimit.com
-.. _blog post: http://blog.altlimit.com/2013/05/backupsync-your-photos-to-flickr-script.html
+.. _github.com: https://github.com/raggaraluz/flickrsmartsync
