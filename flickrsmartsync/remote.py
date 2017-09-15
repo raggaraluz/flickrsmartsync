@@ -104,7 +104,7 @@ class Remote(object):
     # Get photos in a set
     def get_photos_in_set(self, folder, get_url=False):
         # bug on non utf8 machines dups
-        folder = folder.encode('utf-8') if isinstance(folder, str) else folder
+        # folder = folder.encode('utf-8') if isinstance(folder, str) else folder
 
         photos = {}
         # Always upload unix style
@@ -124,7 +124,7 @@ class Remote(object):
                     break
 
                 for photo in photos_in_set['photoset']['photo']:
-                    title = photo['title'].encode('utf-8')
+                    title = photo['title'] #.encode('utf-8')
                     # add missing extension if not present (take a guess as api original_format argument not working)
                     split = title.split(".")
                     # assume valid file extension is less than or equal to 5 characters and not all digits
@@ -170,11 +170,11 @@ class Remote(object):
             for current_set in sets['photosets']['photoset']:
                 # Make sure it's the one from backup format
                 desc = html_parser.unescape(current_set['description']['_content'])
-                desc = desc.encode('utf-8') if isinstance(desc, str) else desc
+                #desc = desc.encode('utf-8') if isinstance(desc, str) else desc
 
                 if self.cmd_args.fix_missing_description and not desc:
                     current_set_title = html_parser.unescape(current_set['title']['_content'])
-                    current_set_title = current_set_title.encode('utf-8') if isinstance(current_set_title, str) else current_set_title
+                    # current_set_title = current_set_title.encode('utf-8') if isinstance(current_set_title, str) else current_set_title
                     description_update_args = self.args.copy()
                     description_update_args.update({
                         'photoset_id': current_set['id'],
