@@ -40,19 +40,26 @@ class Remote(object):
         self.api = flickrapi.FlickrAPI(
             KEY, SECRET, username=self.cmd_args.username
         )
-        #try:
-        #     self.api.authenticate_via_browser(perms=PERMISSIONS)
-        # except Exception:
-        self.api.get_request_token(oauth_callback='oob')
-        authorize_url = self.api.auth_url(perms='delete')
 
-        logger.info('url for authentication: %s' % authorize_url)
-        # Get the verifier code from the user. Do this however you
-        # want, as long as the user gives the application the code.
-        verifier = str(input('Verifier code: '))
+        if self.cmd_args.manual_auth:
+            self.manual_auth()
+        else:
+            self.api.authenticate_via_browser(perms=PERMISSIONS)
 
-        # Trade the request token for an access token
-        self.api.get_access_token(verifier)
+    # Manual authentication from a different computer
+    def manual_auth(self):
+        # Only if the token is not valid
+        if not self.api.token_valid(PERMISSIONS):
+            self.api.get_request_token(oauth_callback='oob')
+            authorize_url = self.api.auth_url(perms='delete')
+
+            logger.info('url for authentication: %s' % authorize_url)
+            # Get the verifier code from the user. Do this however you
+            # want, as long as the user gives the application the code.
+            verifier = str(input('Verifier code: '))
+
+            # Trade the request token for an access token
+            self.api.get_access_token(verifier)
 
     # custom set builder
     def get_custom_set_title(self, path):
