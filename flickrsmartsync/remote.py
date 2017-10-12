@@ -221,7 +221,7 @@ class Remote(object):
         except Exception as e:
             print (e)
 
-        date_iso = utc_time.isoformat(' ')
+        date_iso = utc_time.isoformat(' ', 'seconds')
 
         self.api.photos.setDates(
             photo_id=photo_id,
